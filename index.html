@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Calendar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a1a2e;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards, zoomIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.9); }
+            to { transform: scale(1); }
+        }
+        .calendar-container {
+            padding: 20px;
+        }
+        .month-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 15px;
+            justify-content: center;
+        }
+        .month {
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(255, 20, 147, 0.2);
+            box-shadow: 0px 0px 15px #ff69b4;
+            transition: transform 0.3s;
+        }
+        .month:hover {
+            transform: scale(1.05);
+        }
+        .table {
+            text-align: center;
+            margin: auto;
+            color: #fff;
+            border-color: #ff69b4;
+            table-layout: fixed;
+            width: 100%;
+        }
+        .table th, .table td {
+            border: 1px solid #ff69b4;
+            padding: 8px;
+            width: 14.28%;
+            height: 40px;
+            transition: transform 0.3s, background 0.3s;
+        }
+        .table th {
+            background: #ff69b4;
+            color: #000;
+        }
+        .table td:hover {
+            background: #ff1493;
+            transform: scale(1.2);
+            color: #fff;
+            font-weight: bold;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px #ff69b4;
+        }
+        h1 {
+            text-shadow: 0px 0px 10px #ff69b4;
+        }
+        h2 {
+            text-shadow: 0px 0px 8px #ff1493;
+        }
+    </style>
+</head>
+<body>
+    <div class="container calendar-container">
+        <h1 class="text-center my-4">2025 Calendar</h1>
+        <div class="month-container" id="calendar"></div>
+    </div>
+    <script>
+        const months = [
+            { name: "January", days: 31, start: 3 },
+            { name: "February", days: 28, start: 6 },
+            { name: "March", days: 31, start: 6 },
+            { name: "April", days: 30, start: 2 },
+            { name: "May", days: 31, start: 4 },
+            { name: "June", days: 30, start: 0 },
+            { name: "July", days: 31, start: 2 },
+            { name: "August", days: 31, start: 5 },
+            { name: "September", days: 30, start: 1 },
+            { name: "October", days: 31, start: 3 },
+            { name: "November", days: 30, start: 6 },
+            { name: "December", days: 31, start: 1 }
+        ];
+        function generateCalendar() {
+            let html = "";
+            months.forEach((month) => {
+                html += `<div class='month'><h2>${month.name} 2025</h2><table class='table table-bordered table-hover'><thead><tr>`;
+                ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].forEach(day => {
+                    html += `<th>${day}</th>`;
+                });
+                html += "</tr></thead><tbody><tr>";
+                let dayCounter = 0;
+                for (let i = 0; i < month.start; i++) {
+                    html += "<td></td>";
+                    dayCounter++;
+                }
+                for (let day = 1; day <= month.days; day++) {
+                    html += `<td>${day}</td>`;
+                    dayCounter++;
+                    if (dayCounter % 7 === 0) {
+                        html += "</tr><tr>";
+                    }
+                }
+                while (dayCounter % 7 !== 0) {
+                    html += "<td></td>";
+                    dayCounter++;
+                }
+                html += "</tr></tbody></table></div>";
+            });
+            document.getElementById("calendar").innerHTML = html;
+        }
+        generateCalendar();
+    </script>
+</body>
+</html>
